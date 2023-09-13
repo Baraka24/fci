@@ -31,7 +31,7 @@
                 <option value="2">Autres frais</option>
                 <option value="3">Quitance</option>
               </select>
-              <label for="floatingSelect">Selectionner un membre</label>
+              <label for="floatingSelect">Selectionner un motif</label>
             </div>
             <div class="row mb-3">
               <div class="col-sm-10">
