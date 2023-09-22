@@ -1,10 +1,10 @@
 <?php $title = "Administration"; ?>
 
-<?php $pageTitle = "Profile"; ?>
+<?php $pageTitle = "Entrée"; ?>
 
 <?php ob_start(); ?>
 
-<?php require_once 'includes/users-profile.php' ?>
+<?php require_once 'includes/upentree.php' ?>
 
 <?php $content = ob_get_clean(); ?>
 
