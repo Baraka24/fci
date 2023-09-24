@@ -24,7 +24,7 @@ try {
         $_SESSION["MOT_DE_PASSE"] = $row['MOT_DE_PASSE'];
 
         $_SESSION['ROLE'] = $row['ROLE'];
-        header("Location:../users-profile.php");
+        header("Location:../users-profile.php?msg=True&info=Traitement Reussi");
     } else {
         header("location: ../../index.php?msg=False&info=Verifier votre username ou mot de passe");
     }
