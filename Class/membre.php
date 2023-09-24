@@ -200,7 +200,7 @@ class membre
         $con = new Database();
         $connect = $con->open();
         try {
-            $stmt = $connect->prepare("SELECT count(*) as totalmembre FROM membre where visible=1");
+            $stmt = $connect->prepare("SELECT count(*) as totalmembre FROM membre where visible=1 AND ROLE=0");
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (Exception $e) {
