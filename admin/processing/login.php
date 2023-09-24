@@ -7,7 +7,7 @@ if (isset($_POST['connecter'])) {
     $username = $_POST['username'];
     $password = htmlspecialchars($_POST['password']);
     try {
-        $stmt = $connect->prepare("SELECT * FROM `membre` where NOM_UTILISATEUR=? AND MOT_DE_PASSE=?");
+        $stmt = $connect->prepare("SELECT * FROM `membre` where NOM_UTILISATEUR=? AND MOT_DE_PASSE=? AND STATUT=1");
         $stmt->execute(array($username, $password));
         $nbre = $stmt->rowCount();
 
@@ -28,7 +28,7 @@ if (isset($_POST['connecter'])) {
             $_SESSION['ROLE'] = $row['ROLE'];
             header("Location:../index.php");
         } else {
-            header("location: ../../index.php?msg=False&info=Verifier votre username ou mot de passe");
+            header("location: ../../index.php?msg=False&info=Verifier votre nom utilisateur ou mot de passe ou verifiez si votre compte est approuvé");
         }
     } catch (PDOException $e) {
         $erreur = $e->getMessage();
