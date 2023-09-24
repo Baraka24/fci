@@ -22,7 +22,7 @@ $all = $data->afficherall()
                 </div>
 
                 <div class="card-body">
-                    <h5 class="card-title mb-4">Entrée <span>| Modification</span></h5>
+                    <h5 class="card-title mb-4">Sortie <span>| Modification</span></h5>
                     <?php
                     foreach ($all as $key => $val) { ?>
 
