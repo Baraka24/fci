@@ -6,6 +6,7 @@ class membre
     private $nom;
     private $postnom;
     private $prenom;
+    private $adresse;
     private $lieu_de_travail;
     private $numero_de_telephone;
     private $nom_utilisateur;
@@ -64,6 +65,15 @@ class membre
     public function setPrenom($value)
     {
         $this->prenom = $value;
+    }
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse($value)
+    {
+        $this->adresse = $value;
     }
 
     public function getLieu_de_travail()
@@ -151,8 +161,8 @@ class membre
         $con = new Database();
         $connect = $con->open();
         try {
-            $stmt = $connect->prepare("INSERT INTO `membre`(`numero`,`nom`, `postnom`,`prenom`, `lieu_de_travail`,`numero_de_telephone`,`nom_utilisateur`, `mot_de_passe`,`profile`,`statut`,`visible`) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
-            $stmt->execute([$this->numero, $this->nom, $this->postnom, $this->prenom, $this->lieu_de_travail, $this->numero_de_telephone, $this->nom_utilisateur, $this->mot_de_passe, $this->profile, $this->status, $this->visible = 1]);
+            $stmt = $connect->prepare("INSERT INTO `membre`(`numero`,`nom`, `postnom`,`prenom`, `adresse`,`lieu_de_travail`,`numero_de_telephone`,`nom_utilisateur`, `mot_de_passe`,`profile`,`statut`,`visible`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+            $stmt->execute([$this->numero, $this->nom, $this->postnom, $this->prenom, $this->adresse, $this->lieu_de_travail, $this->numero_de_telephone, $this->nom_utilisateur, $this->mot_de_passe, $this->profile, $this->status, $this->visible = 1]);
             $con->close();
         } catch (Exception $e) {
             return $this->$e;
@@ -259,8 +269,8 @@ class membre
         try {
             $con = new Database();
             $connect = $con->open();
-            $stmt = $connect->prepare("UPDATE `membre` SET `numero`=?,`nom`=?, `postnom`=?,`prenom`=?, `lieu_de_travail`=?,`numero_de_telephone`=?,`nom_utilisateur`=?, `mot_de_passe`=?,`profile`=?,`statut`=?,`visible`=? WHERE id=?");
-            $stmt->execute([$this->numero, $this->nom, $this->postnom, $this->prenom, $this->lieu_de_travail, $this->numero_de_telephone, $this->nom_utilisateur, $this->mot_de_passe, $this->profile, $this->status, $this->visible = 1, $this->id]);
+            $stmt = $connect->prepare("UPDATE `membre` SET `numero`=?,`nom`=?, `postnom`=?,`prenom`=?,`adresse`=?,`lieu_de_travail`=?,`numero_de_telephone`=?,`nom_utilisateur`=?, `mot_de_passe`=?,`profile`=?,`statut`=?,`visible`=? WHERE id=?");
+            $stmt->execute([$this->numero, $this->nom, $this->postnom, $this->prenom, $this->adresse, $this->lieu_de_travail, $this->numero_de_telephone, $this->nom_utilisateur, $this->mot_de_passe, $this->profile, $this->status, $this->visible = 1, $this->id]);
         } catch (Exception $e) {
             return $e->getMessage();
         }
@@ -270,8 +280,8 @@ class membre
         try {
             $con = new Database();
             $connect = $con->open();
-            $stmt = $connect->prepare("UPDATE `membre` SET `nom`=?, `postnom`=?,`prenom`=?, `lieu_de_travail`=?,`numero_de_telephone`=?,`profile`=? WHERE id=?");
-            $stmt->execute([$this->nom, $this->postnom, $this->prenom, $this->lieu_de_travail, $this->numero_de_telephone, $this->profile, $this->id]);
+            $stmt = $connect->prepare("UPDATE `membre` SET `nom`=?, `postnom`=?,`prenom`=?,`adresse`=?, `lieu_de_travail`=?,`numero_de_telephone`=?,`profile`=? WHERE id=?");
+            $stmt->execute([$this->nom, $this->postnom, $this->prenom, $this->adresse, $this->lieu_de_travail, $this->numero_de_telephone, $this->profile, $this->id]);
         } catch (Exception $e) {
             return $e->getMessage();
         }
@@ -281,8 +291,8 @@ class membre
         try {
             $con = new Database();
             $connect = $con->open();
-            $stmt = $connect->prepare("UPDATE `membre` SET `nom`=?, `postnom`=?,`prenom`=?, `lieu_de_travail`=?,`numero_de_telephone`=? WHERE id=?");
-            $stmt->execute([$this->nom, $this->postnom, $this->prenom, $this->lieu_de_travail, $this->numero_de_telephone, $this->id]);
+            $stmt = $connect->prepare("UPDATE `membre` SET `nom`=?, `postnom`=?,`prenom`=?,`adresse`=?, `lieu_de_travail`=?,`numero_de_telephone`=? WHERE id=?");
+            $stmt->execute([$this->nom, $this->postnom, $this->prenom, $this->adresse, $this->lieu_de_travail, $this->numero_de_telephone, $this->id]);
         } catch (Exception $e) {
             return $e->getMessage();
         }
@@ -292,8 +302,8 @@ class membre
         try {
             $con = new Database();
             $connect = $con->open();
-            $stmt = $connect->prepare("UPDATE `membre` SET `numero`=?,`nom`=?, `postnom`=?,`prenom`=?, `lieu_de_travail`=?,`numero_de_telephone`=?,`visible`=? WHERE id=?");
-            $stmt->execute([$this->numero, $this->nom, $this->postnom, $this->prenom, $this->lieu_de_travail, $this->numero_de_telephone, $this->visible = 1, $this->id]);
+            $stmt = $connect->prepare("UPDATE `membre` SET `numero`=?,`nom`=?, `postnom`=?,`prenom`=?,`adresse`=?, `lieu_de_travail`=?,`numero_de_telephone`=?,`visible`=? WHERE id=?");
+            $stmt->execute([$this->numero, $this->nom, $this->postnom, $this->prenom, $this->adresse, $this->lieu_de_travail, $this->numero_de_telephone, $this->visible = 1, $this->id]);
         } catch (Exception $e) {
             return $e->getMessage();
         }

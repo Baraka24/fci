@@ -14,19 +14,20 @@ $last = $data->lastnumber();
                 <?php
                 if ($_SESSION['ROLE'] != 0) {
                 ?>
-                    <div class="filter">
-                        <a class="icon " data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle-fill h4"></i></a>
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots h4"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start">
-                                <h6>Filtrer</h6>
-                            </li>
+                <div class="filter">
+                    <a class="icon " data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                            class="bi bi-plus-circle-fill h4"></i></a>
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots h4"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                            <h6>Filtrer</h6>
+                        </li>
 
-                            <li><a class="dropdown-item" href="#">Aujourd'hui</a></li>
-                            <li><a class="dropdown-item" href="#">Ce mois</a></li>
-                            <li><a class="dropdown-item" href="#">Cette année</a></li>
-                        </ul>
-                    </div>
+                        <li><a class="dropdown-item" href="#">Aujourd'hui</a></li>
+                        <li><a class="dropdown-item" href="#">Ce mois</a></li>
+                        <li><a class="dropdown-item" href="#">Cette année</a></li>
+                    </ul>
+                </div>
                 <?php
                 }
                 ?>
@@ -39,13 +40,14 @@ $last = $data->lastnumber();
                             <tr>
                                 <th scope="col">N°</th>
                                 <th scope="col">NOMS</th>
+                                <th scope="col">ADRESSE</th>
                                 <th scope="col">LIEU DE TRAVAIL</th>
                                 <th scope="col">PHONE</th>
                                 <th scope="col">STATUS</th>
                                 <?php
                                 if ($_SESSION['ROLE'] != 0) {
                                 ?>
-                                    <th scope="col">ACTION</th>
+                                <th scope="col">ACTION</th>
                                 <?php
                                 }
                                 ?>
@@ -55,76 +57,77 @@ $last = $data->lastnumber();
                             <?php
                             foreach ($all as $key => $val) {
                             ?>
-                                <tr>
-                                    <th scope="row"><?= $val['NUMERO'] ?></th>
-                                    <td><?= $val['NOM'] . " " . $val['POSTNOM'] . " " . $val['PRENOM'] ?></td>
-                                    <td><?= $val['LIEU_DE_TRAVAIL'] ?></td>
-                                    <td><?= $val['NUMERO_DE_TELEPHONE'] ?></td>
+                            <tr>
+                                <th scope="row"><?= $val['NUMERO'] ?></th>
+                                <td><?= $val['NOM'] . " " . $val['POSTNOM'] . " " . $val['PRENOM'] ?></td>
+                                <td><?= $val['ADRESSE'] ?></td>
+                                <td><?= $val['LIEU_DE_TRAVAIL'] ?></td>
+                                <td><?= $val['NUMERO_DE_TELEPHONE'] ?></td>
 
-                                    <td>
-                                        <?php
+                                <td>
+                                    <?php
                                         if ($val['STATUT'] == 1) {
                                         ?>
-                                            <span class="badge bg-success">Approuvé</span>
-                                        <?php
+                                    <span class="badge bg-success">Approuvé</span>
+                                    <?php
                                         } elseif ($val['STATUT'] == 0) {
                                         ?>
-                                            <span class="badge bg-danger">Non Approuvé</span>
-                                        <?php
+                                    <span class="badge bg-danger">Non Approuvé</span>
+                                    <?php
                                         }
                                         ?>
-                                    </td>
-                                    <?php
+                                </td>
+                                <?php
                                     if ($_SESSION['ROLE'] != 0) {
                                     ?>
-                                        <td class="fw bold text-center mx-auto mx-2">
+                                <td class="fw bold text-center mx-auto mx-2">
 
 
-                                            <a href="./member.php?id=<?= $val['ID'] ?>">
-                                                <span class="badge bg-success ms-2">
-                                                    <i class="bi bi-pencil-square fa-lg "></i>
-                                                </span>
-                                            </a>
-                                            <a href="../admin/processing/deletemember.php?id=<?= $val['ID'] ?>">
-                                                <span class="badge bg-danger ms-2">
-                                                    <i class="bi bi-trash fa-lg "></i>
-                                                </span>
-                                            </a>
-                                            <?php
+                                    <a href="./member.php?id=<?= $val['ID'] ?>">
+                                        <span class="badge bg-success ms-2">
+                                            <i class="bi bi-pencil-square fa-lg "></i>
+                                        </span>
+                                    </a>
+                                    <a href="../admin/processing/deletemember.php?id=<?= $val['ID'] ?>">
+                                        <span class="badge bg-danger ms-2">
+                                            <i class="bi bi-trash fa-lg "></i>
+                                        </span>
+                                    </a>
+                                    <?php
                                             if ($val['STATUT'] == 0) {
                                             ?>
-                                                <a href="../admin/processing/approved.php?id=<?= $val['ID'] ?>">
-                                                    <span class="badge bg-info ms-2">
-                                                        <i class="bi bi-check-all fa-lg "></i>
-                                                    </span>
-                                                </a>
+                                    <a href="../admin/processing/approved.php?id=<?= $val['ID'] ?>">
+                                        <span class="badge bg-info ms-2">
+                                            <i class="bi bi-check-all fa-lg "></i>
+                                        </span>
+                                    </a>
 
-                                            <?php
+                                    <?php
                                             } else if ($val['ROLE'] == 0) {
                                             ?>
-                                                <a href="../admin/processing/makeadmin.php?id=<?= $val['ID'] ?>">
-                                                    <span class="badge bg-secondary ms-2">
-                                                        <i class="bi bi-check-circle fa-lg "></i>
-                                                    </span>
-                                                </a>
-                                            <?php
+                                    <a href="../admin/processing/makeadmin.php?id=<?= $val['ID'] ?>">
+                                        <span class="badge bg-secondary ms-2">
+                                            <i class="bi bi-check-circle fa-lg "></i>
+                                        </span>
+                                    </a>
+                                    <?php
                                             } else {
                                             ?>
-                                                <a href="../admin/processing/unmakeadmin.php?id=<?= $val['ID'] ?>">
-                                                    <span class="badge bg-warning ms-2">
-                                                        <i class="bi bi-x-octagon fa-lg "></i>
-                                                    </span>
-                                                </a>
-                                            <?php
+                                    <a href="../admin/processing/unmakeadmin.php?id=<?= $val['ID'] ?>">
+                                        <span class="badge bg-warning ms-2">
+                                            <i class="bi bi-x-octagon fa-lg "></i>
+                                        </span>
+                                    </a>
+                                    <?php
                                             }
                                             ?>
 
 
-                                        </td>
-                                    <?php
+                                </td>
+                                <?php
                                     }
                                     ?>
-                                </tr>
+                            </tr>
                             <?php
                             }
                             ?>
@@ -147,25 +150,24 @@ $last = $data->lastnumber();
                 <button type="button" class="btn-close h2 fw-bold" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body ms-3">
-                <form enctype="multipart/form-data" class="row g-3 needs-validation" method="POST" action="../admin/processing/addmember.php" novalidate>
+                <form enctype="multipart/form-data" class="row g-3 needs-validation" method="POST"
+                    action="../admin/processing/addmember.php" novalidate>
                     <div class="row">
-
-                        <div class="col-md-4">
-                            <label for="yourEmail" class="form-label">Numéro</label>
-
-                            <input readonly value="1" type="number" min="0" name="numero" class="form-control" id="yourEmail" required>
-
-                            <div class="invalid-feedback">Svp Entrer votre numéro!</div>
-                        </div>
                         <div class="col-md-4">
                             <label for="yourEmail" class="form-label">Numero de téléphone</label>
-                            <input type="number" min="0" name="numerotelephone" class="form-control" id="yourEmail" required>
+                            <input type="number" min="0" name="numerotelephone" class="form-control" id="yourEmail"
+                                required>
                             <div class="invalid-feedback">Svp Entrer votre numéro!</div>
                         </div>
                         <div class="col-md-4">
                             <label for="yourEmail" class="form-label">Lieu de Travail</label>
-                            <input type="text" min="0" name="lieudetravail" class="form-control" id="yourEmail" required>
+                            <input type="text" name="lieudetravail" class="form-control" id="yourEmail" required>
                             <div class="invalid-feedback">Svp Entrer votre lieu de travail!</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="yourEmail" class="form-label">Adresse</label>
+                            <input type="text" name="adresse" class="form-control" id="yourEmail" required>
+                            <div class="invalid-feedback">Svp Entrer votre adresse!</div>
                         </div>
                     </div>
                     <div class="row">

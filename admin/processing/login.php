@@ -24,6 +24,7 @@ if (isset($_POST['connecter'])) {
             $_SESSION["NUMERO_DE_TELEPHONE"] = $row['NUMERO_DE_TELEPHONE'];
             $_SESSION["NOM_UTILISATEUR"] = $row['NOM_UTILISATEUR'];
             $_SESSION["MOT_DE_PASSE"] = $row['MOT_DE_PASSE'];
+            $_SESSION["ADRESSE"] = $row['ADRESSE'];
 
             $_SESSION['ROLE'] = $row['ROLE'];
             header("Location:../index.php");

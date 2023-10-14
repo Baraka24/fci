@@ -2,10 +2,13 @@
 require_once("../includes/link_db.php");
 require_once("../Class/devise.php");
 require_once("../Class/cotisation.php");
+require_once("../Class/paiement.php");
 $data = new devise();
 $all = $data->afficherbystatuts();
 $motif = new cotisation();
 $motif_d = $motif->afficher();
+$paie = new paiement();
+
 ?>
 <!-- Right side columns -->
 <div class="col-lg-12">
@@ -16,19 +19,20 @@ $motif_d = $motif->afficher();
                 <?php
                 if ($_SESSION['ROLE'] != 0) {
                 ?>
-                    <div class="filter">
-                        <a class="icon " data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle-fill h4"></i></a>
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots h4"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start">
-                                <h6>Filtrer</h6>
-                            </li>
+                <div class="filter">
+                    <a class="icon " data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                            class="bi bi-plus-circle-fill h4"></i></a>
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots h4"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                            <h6>Filtrer</h6>
+                        </li>
 
-                            <li><a class="dropdown-item" href="#">Aujourd'hui</a></li>
-                            <li><a class="dropdown-item" href="#">Ce mois</a></li>
-                            <li><a class="dropdown-item" href="#">Cette année</a></li>
-                        </ul>
-                    </div>
+                        <li><a class="dropdown-item" href="#">Aujourd'hui</a></li>
+                        <li><a class="dropdown-item" href="#">Ce mois</a></li>
+                        <li><a class="dropdown-item" href="#">Cette année</a></li>
+                    </ul>
+                </div>
                 <?php
                 }
                 ?>
@@ -43,10 +47,11 @@ $motif_d = $motif->afficher();
                                 <th scope="col">DEVISE</th>
                                 <th scope="col">MONTANT</th>
                                 <th scope="col">TAUX</th>
+                                <th scope="col">TOTAL PAIE PAR MOTIF</th>
                                 <?php
                                 if ($_SESSION['ROLE'] != 0) {
                                 ?>
-                                    <th scope="col">ACTION</th>
+                                <th scope="col">ACTION</th>
                                 <?php
                                 }
                                 ?>
@@ -56,30 +61,40 @@ $motif_d = $motif->afficher();
                             <?php
                             foreach ($motif_d as $keym => $valm) {
                             ?>
-                                <tr>
-                                    <th><?= $valm['DESCRIPTION'] ?></th>
-                                    <td><?= $valm['devise'] ?></td>
-                                    <td><?= $valm['MONTANT'] ?></td>
-                                    <td><?= $valm['taux'] ?></td>
-                                    <?php
-                                    if ($_SESSION['ROLE'] != 0) {
+                            <tr>
+                                <th><?= $valm['DESCRIPTION'] ?></th>
+                                <td><?= $valm['devise'] ?></td>
+                                <td><?= $valm['MONTANT'] ?></td>
+                                <td><?= $valm['taux'] ?></td>
+                                <?php
+                                    $paie->setCotisation($valm['id']);
+                                    $gettot = $paie->summotif();
+                                    foreach ($gettot as $keytot => $valtot) {
                                     ?>
-                                        <td>
-                                            <a href=" ./upmotif.php?id=<?= $valm['id'] ?>">
-                                                <span class="badge bg-success ms-2">
-                                                    <i class="bi bi-pencil-square fa-lg "></i>
-                                                </span>
-                                            </a>
-                                            <a href="../admin/processing/deletemotif.php?id=<?= $valm['id'] ?>">
-                                                <span class="badge bg-danger ms-2">
-                                                    <i class="bi bi-trash fa-lg "></i>
-                                                </span>
-                                            </a>
-                                        </td>
-                                    <?php
+
+                                <td><?= $valtot['summotif'] ?></td>
+                                <?php
                                     }
                                     ?>
-                                </tr>
+                                <?php
+                                    if ($_SESSION['ROLE'] != 0) {
+                                    ?>
+                                <td>
+                                    <a href=" ./upmotif.php?id=<?= $valm['id'] ?>">
+                                        <span class="badge bg-success ms-2">
+                                            <i class="bi bi-pencil-square fa-lg "></i>
+                                        </span>
+                                    </a>
+                                    <a href="../admin/processing/deletemotif.php?id=<?= $valm['id'] ?>">
+                                        <span class="badge bg-danger ms-2">
+                                            <i class="bi bi-trash fa-lg "></i>
+                                        </span>
+                                    </a>
+                                </td>
+                                <?php
+                                    }
+                                    ?>
+                            </tr>
                             <?php
                             }
                             ?>
@@ -104,20 +119,23 @@ $motif_d = $motif->afficher();
             <div class="modal-body ms-3">
                 <form method="POST" action="../admin/processing/addmotif.php?">
                     <div class="form-floating mb-3">
-                        <input name="description" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input name="description" type="text" class="form-control" id="floatingInput"
+                            placeholder="name@example.com">
                         <label for="floatingInput">Description</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input name="montant" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input name="montant" type="text" class="form-control" id="floatingInput"
+                            placeholder="name@example.com">
                         <label for="floatingInput">Montant à payer</label>
                     </div>
                     <?php
                     foreach ($all as $key => $val) {
                     ?>
-                        <div class="form-floating mb-3">
-                            <input readonly name="devise" value="<?= $val['description'] ?>" type="text" class="form-control" id="floatingInput">
-                            <label for="floatingInput">Devise</label>
-                        </div>
+                    <div class="form-floating mb-3">
+                        <input readonly name="devise" value="<?= $val['description'] ?>" type="text"
+                            class="form-control" id="floatingInput">
+                        <label for="floatingInput">Devise</label>
+                    </div>
                     <?php
                     }
                     ?>

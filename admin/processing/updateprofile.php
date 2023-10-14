@@ -14,6 +14,7 @@ if (isset($_POST['update'])) {
             $data->setNom($_POST['nom']);
             $data->setPostnom($_POST['postnom']);
             $data->setPrenom($_POST['prenom']);
+            $data->setAdresse($_POST['adresse']);
             $data->setLieu_de_travail($_POST['lieudetravail']);
             $data->setNumero_de_telephone($_POST['numerotelephone']);
             $data->setProfile($image);
@@ -33,11 +34,13 @@ if (isset($_POST['update'])) {
             $data->setNom($_POST['nom']);
             $data->setPostnom($_POST['postnom']);
             $data->setPrenom($_POST['prenom']);
+            $data->setAdresse($_POST['adresse']);
             $data->setLieu_de_travail($_POST['lieudetravail']);
             $data->setNumero_de_telephone($_POST['numerotelephone']);
             $data->modifierbymembernoprofile();
-
-            header("location:../../includes/sessionclose.php");
+            $_SESSION['NOM_UTILISATEUR'];
+            $_SESSION['MOT_DE_PASSE'];
+            header("location:./tempo.php");
         } catch (Exception $e) {
             return $e;
         }

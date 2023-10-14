@@ -117,6 +117,30 @@ class sortie
             return $e->getMessage();
         }
     }
+    public function rpsortie()
+    {
+        $con = new Database();
+        $connect = $con->open();
+        try {
+            $stmt = $connect->prepare("SELECT DATE_FORMAT(sortie.DATE_SORTIE,'%d/%m/%Y') as ddate, DESCRIPTION,(sortie.taux * sortie.MONTANT) as MONTANT FROM `sortie`WHERE DATE_FORMAT(sortie.DATE_SORTIE,'%Y-%m-%d')=?");
+            $stmt->execute([$this->date_sortie]);
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function rpsumsortie()
+    {
+        $con = new Database();
+        $connect = $con->open();
+        try {
+            $stmt = $connect->prepare("SELECT SUM(taux * MONTANT) as totalsortie FROM sortie WHERE DATE_FORMAT(sortie.DATE_SORTIE,'%Y-%m-%d')=?");
+            $stmt->execute([$this->date_sortie]);
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
     public function sum()
     {
         $con = new Database();
