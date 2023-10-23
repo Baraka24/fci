@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 23 sep. 2023 à 19:12
+-- Généré le : sam. 14 oct. 2023 à 12:47
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -36,6 +36,14 @@ CREATE TABLE `cotisation` (
   `MONTANT` decimal(10,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `cotisation`
+--
+
+INSERT INTO `cotisation` (`ID`, `DESCRIPTION`, `VISIBLE`, `devise`, `taux`, `MONTANT`) VALUES
+(1, 'Association', 1, 2, 1, 12000),
+(2, 'TVA', 1, 2, 1, 15000);
+
 -- --------------------------------------------------------
 
 --
@@ -49,6 +57,14 @@ CREATE TABLE `devise` (
   `visible` int(11) DEFAULT NULL,
   `statuts` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `devise`
+--
+
+INSERT INTO `devise` (`id`, `description`, `taux`, `visible`, `statuts`) VALUES
+(1, 'USD (Dollars Americain)', 2500, 1, 0),
+(2, 'CDF(Franc Congolais)', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -66,6 +82,13 @@ CREATE TABLE `entree` (
   `taux` decimal(10,0) DEFAULT NULL,
   `MONTANT` decimal(10,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `entree`
+--
+
+INSERT INTO `entree` (`ID`, `DATE_ENTREE`, `DESCRIPTION`, `OBSERVATION`, `VISIBLE`, `devise`, `taux`, `MONTANT`) VALUES
+(1, '2023-09-26', 'DON', 'DG', 1, 1, 2500, 10);
 
 -- --------------------------------------------------------
 
@@ -86,15 +109,21 @@ CREATE TABLE `membre` (
   `PROFILE` text NOT NULL,
   `STATUT` text NOT NULL,
   `VISIBLE` int(11) NOT NULL,
-  `ROLE` int(11) DEFAULT 0
+  `ROLE` int(11) DEFAULT 0,
+  `ADRESSE` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `membre`
 --
 
-INSERT INTO `membre` (`ID`, `NUMERO`, `NOM`, `POSTNOM`, `PRENOM`, `LIEU_DE_TRAVAIL`, `NUMERO_DE_TELEPHONE`, `NOM_UTILISATEUR`, `MOT_DE_PASSE`, `PROFILE`, `STATUT`, `VISIBLE`, `ROLE`) VALUES
-(1, '1', 'admin', 'admin', 'admin', 'admin', '0', 'admin', 'admin', '', '1', 1, 1);
+INSERT INTO `membre` (`ID`, `NUMERO`, `NOM`, `POSTNOM`, `PRENOM`, `LIEU_DE_TRAVAIL`, `NUMERO_DE_TELEPHONE`, `NOM_UTILISATEUR`, `MOT_DE_PASSE`, `PROFILE`, `STATUT`, `VISIBLE`, `ROLE`, `ADRESSE`) VALUES
+(1, '1', 'admin', 'admin', 'admin', 'admin', '0', 'admin', 'admin', 'blank-profile-picture-973460_1280.png', '1', 1, 1, 'Goma/Virunga'),
+(2, '2', 'Mumbere', 'Tsongo', 'Nathanael', 'GOMA', '0995247814', 'nathan', '12', 'blank-profile-picture-973460_1280.png', '1', 1, 0, 'Goma/Katoyi'),
+(3, '3', 'Klein', 'Maghuru', 'David', 'Goma', '0995247814', 'user', '0000', 'blank-profile-picture-973460_1280.png', '0', 1, 0, 'Goma/Himbi'),
+(4, '4', 'Jean-Louis', 'Aganze', 'Ciza', 'Goma', '0995247814', 'user', '0000', '', '1', 0, 0, NULL),
+(5, '5', 'JO', 'DEN', 'EL', 'Goma', '04', 'den', '0', 'blank-profile-picture-973460_1280.png', '1', 1, 0, 'Goma/Birere'),
+(6, '6', 'Mumbere', 'Tsongo', 'Nath', 'Goma', '0995247814', 'nath', '0000', '', '1', 1, 0, 'Goma/Virunga');
 
 -- --------------------------------------------------------
 
@@ -113,6 +142,15 @@ CREATE TABLE `paiement` (
   `MONTANT` decimal(10,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `paiement`
+--
+
+INSERT INTO `paiement` (`ID`, `DATE_PAIE`, `MEMBRE`, `COTISATION`, `VISIBLE`, `devise`, `taux`, `MONTANT`) VALUES
+(1, '2023-09-28', 2, 2, 1, 2, 1, 15000),
+(2, '2023-09-28', 3, 2, 1, 2, 1, 15000),
+(3, '2023-09-28', 5, 2, 1, 2, 1, 10000);
+
 -- --------------------------------------------------------
 
 --
@@ -129,6 +167,13 @@ CREATE TABLE `sortie` (
   `taux` decimal(10,0) DEFAULT NULL,
   `MONTANT` decimal(10,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `sortie`
+--
+
+INSERT INTO `sortie` (`ID`, `DATE_SORTIE`, `DESCRIPTION`, `OBSERVATION`, `VISIBLE`, `devise`, `taux`, `MONTANT`) VALUES
+(1, '2023-09-27', 'DG', 'Transport', 1, 2, 1, 20000);
 
 --
 -- Index pour les tables déchargées
@@ -178,37 +223,37 @@ ALTER TABLE `sortie`
 -- AUTO_INCREMENT pour la table `cotisation`
 --
 ALTER TABLE `cotisation`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `devise`
 --
 ALTER TABLE `devise`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `entree`
 --
 ALTER TABLE `entree`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `membre`
 --
 ALTER TABLE `membre`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `paiement`
 --
 ALTER TABLE `paiement`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `sortie`
 --
 ALTER TABLE `sortie`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
